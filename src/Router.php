@@ -59,18 +59,42 @@ class Router {
         };
     }
 
+    /**
+     * @param string $route
+     * @param string $classname
+     * @param string $action
+     * @param bool $isSecure
+     */
     public function get(string $route, string $classname, string $action, bool $isSecure = false) {
         $this->routes[] = new Route(HttpRequest::HTTP_GET, $route, $classname, $action, $isSecure);
     }
 
+    /**
+     * @param string $route
+     * @param string $classname
+     * @param string $action
+     * @param bool $isSecure
+     */
     public function post(string $route, string $classname, string $action, bool $isSecure = false) {
         $this->routes[] = new Route(HttpRequest::HTTP_POST, $route, $classname, $action, $isSecure);
     }
 
+    /**
+     * @param string $route
+     * @param string $classname
+     * @param string $action
+     * @param bool $isSecure
+     */
     public function put(string $route, string $classname, string $action, bool $isSecure = false) {
         $this->routes[] = new Route(HttpRequest::HTTP_PUT, $route, $classname, $action, $isSecure);
     }
 
+    /**
+     * @param string $route
+     * @param string $classname
+     * @param string $action
+     * @param bool $isSecure
+     */
     public function delete(string $route, string $classname, string $action, bool $isSecure = false) {
         $this->routes[] = new Route(HttpRequest::HTTP_DELETE, $route, $classname, $action, $isSecure);
     }
