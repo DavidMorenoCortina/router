@@ -45,7 +45,7 @@ class HttpRequestTest extends TestCase {
 
     public function testPostRequest() {
         $_SERVER['REQUEST_METHOD'] = 'post';
-        $_SERVER['REQUEST_URI'] = '/';
+        $_SERVER['REQUEST_URI'] = '/Say-Hello';
         $_SERVER['CONTENT_TYPE'] = 'application/json';
 
         $msg = 'hello world';
@@ -58,7 +58,7 @@ class HttpRequestTest extends TestCase {
         $this->assertEquals(HttpRequest::HTTP_POST, $request->getMethod());
         try {
             $routePath = $request->getRoutePath();
-            $this->assertEquals('/', $routePath);
+            $this->assertEquals('/say-hello', $routePath);
         } catch (CLIRequestException $e) {
             $this->assertTrue(false);
         }

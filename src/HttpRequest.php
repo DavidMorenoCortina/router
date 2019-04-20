@@ -48,7 +48,7 @@ class HttpRequest {
         if(!array_key_exists('REQUEST_URI', $_SERVER) || mb_strlen($_SERVER['REQUEST_URI']) > 2083){
             $this->routePath = null;
         }else{
-            $this->routePath = $_SERVER['REQUEST_URI'];
+            $this->routePath = mb_strtolower($_SERVER['REQUEST_URI']);
         }
     }
 

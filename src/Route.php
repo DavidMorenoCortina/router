@@ -46,6 +46,14 @@ class Route {
      */
     protected $userId = 0;
 
+    /**
+     * Route constructor.
+     * @param int $method
+     * @param string $route
+     * @param string $classname
+     * @param string $action
+     * @param bool $isSecure
+     */
     public function __construct(int $method, string $route, string $classname, string $action, bool $isSecure = false) {
         $this->method = $method;
         $this->route = $route;
