@@ -136,6 +136,7 @@ class HttpRequestTest extends TestCase {
         $request = new HttpRequest();
 
         $this->assertEquals('xxx', $request->getToken());
+        $this->assertEquals('/', $request->getRoutePath());
     }
 
     public function testGetRequestInvalidToken() {

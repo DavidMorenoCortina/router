@@ -49,7 +49,7 @@ class HttpRequest {
             if(array_key_exists('QUERY_STRING', $_SERVER)){
                 $n = mb_strlen($_SERVER['QUERY_STRING']);
                 $max = mb_strlen($_SERVER['REQUEST_URI']) - $n - 1;
-                if($n > 0 || $_SERVER['REQUEST_URI'][$max-1] === '?') {
+                if($n > 0 || $_SERVER['REQUEST_URI'][$max] === '?') {
                     $path = mb_substr($_SERVER['REQUEST_URI'], 0, $max);
                 }else{
                     $path = $_SERVER['REQUEST_URI'];
