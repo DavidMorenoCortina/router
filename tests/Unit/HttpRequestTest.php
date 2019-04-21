@@ -69,6 +69,32 @@ class HttpRequestTest extends TestCase {
         $this->assertEquals($msg, $body['param']);
     }
 
+    public function testPostRequestAlternateHeader() {
+        $_SERVER['REQUEST_METHOD'] = 'post';
+        $_SERVER['REQUEST_URI'] = '/Say-Hello';
+        $_SERVER['HTTP_CONTENT_TYPE'] = 'application/json';
+
+        $msg = 'hello world';
+
+        $inputStream = __DIR__ . '/test.txt';
+        file_put_contents($inputStream, json_encode(['param' => $msg]));
+
+        $request = new HttpRequest($inputStream);
+
+        $this->assertEquals(HttpRequest::HTTP_POST, $request->getMethod());
+        try {
+            $routePath = $request->getRoutePath();
+            $this->assertEquals('/say-hello', $routePath);
+        } catch (CLIRequestException $e) {
+            $this->assertTrue(false);
+        }
+        $this->assertIsArray($request->getBody());
+
+        $body = $request->getBody();
+        $this->assertArrayHasKey('param', $body);
+        $this->assertEquals($msg, $body['param']);
+    }
+
     public function testPutRequest() {
         $_SERVER['REQUEST_METHOD'] = 'put';
         $_SERVER['REQUEST_URI'] = '/';

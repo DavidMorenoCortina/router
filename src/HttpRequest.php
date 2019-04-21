@@ -75,8 +75,15 @@ class HttpRequest {
      */
     public function getBody() :array {
         if(is_null($this->body)) {
-            if (array_key_exists('CONTENT_TYPE', $_SERVER)
-                && strcmp($_SERVER['CONTENT_TYPE'], 'application/json') === 0
+            if ((
+                (
+                    array_key_exists('CONTENT_TYPE', $_SERVER)
+                    && strcmp($_SERVER['CONTENT_TYPE'], 'application/json') === 0
+                )
+                || (
+                    array_key_exists('HTTP_CONTENT_TYPE', $_SERVER)
+                    && strcmp($_SERVER['HTTP_CONTENT_TYPE'], 'application/json') === 0
+                ))
                 && (
                     self::HTTP_POST === $this->method
                     || self::HTTP_PUT === $this->method
