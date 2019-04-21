@@ -45,10 +45,26 @@ class HttpRequest {
                 $this->method = self::HTTP_GET;
         }
 
-        if(!array_key_exists('REQUEST_URI', $_SERVER) || mb_strlen($_SERVER['REQUEST_URI']) > 2083){
-            $this->routePath = null;
+        if(array_key_exists('REQUEST_URI', $_SERVER)){
+            if(array_key_exists('QUERY_STRING', $_SERVER)){
+                $n = mb_strlen($_SERVER['QUERY_STRING']);
+                $max = mb_strlen($_SERVER['REQUEST_URI']) - $n - 1;
+                if($n > 0 || $_SERVER['REQUEST_URI'][$max-1] === '?') {
+                    $path = mb_substr($_SERVER['REQUEST_URI'], 0, $max);
+                }else{
+                    $path = $_SERVER['REQUEST_URI'];
+                }
+            }else{
+                $path = $_SERVER['REQUEST_URI'];
+            }
+
+            if(mb_strlen($path) > 2083){
+                $this->routePath = null;
+            }else{
+                $this->routePath = mb_strtolower($path);
+            }
         }else{
-            $this->routePath = mb_strtolower($_SERVER['REQUEST_URI']);
+            $this->routePath = null;
         }
     }
 

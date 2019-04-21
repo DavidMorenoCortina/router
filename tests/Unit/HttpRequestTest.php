@@ -11,6 +11,7 @@ class HttpRequestTest extends TestCase {
     public function testCliRequest() {
         $_SERVER['REQUEST_METHOD'] = null;
         $_SERVER['REQUEST_URI'] = null;
+        unset($_SERVER['QUERY_STRING']);
 
         $request = new HttpRequest();
 
@@ -28,6 +29,7 @@ class HttpRequestTest extends TestCase {
     public function testGETRequest() {
         $_SERVER['REQUEST_METHOD'] = 'GET';
         $_SERVER['REQUEST_URI'] = '/';
+        unset($_SERVER['QUERY_STRING']);
 
         $request = new HttpRequest();
 
@@ -46,6 +48,7 @@ class HttpRequestTest extends TestCase {
     public function testPostRequest() {
         $_SERVER['REQUEST_METHOD'] = 'post';
         $_SERVER['REQUEST_URI'] = '/Say-Hello';
+        unset($_SERVER['QUERY_STRING']);
         $_SERVER['CONTENT_TYPE'] = 'application/json';
 
         $msg = 'hello world';
@@ -71,7 +74,8 @@ class HttpRequestTest extends TestCase {
 
     public function testPostRequestAlternateHeader() {
         $_SERVER['REQUEST_METHOD'] = 'post';
-        $_SERVER['REQUEST_URI'] = '/Say-Hello';
+        $_SERVER['REQUEST_URI'] = '/Say-Hello?q=1';
+        $_SERVER['QUERY_STRING'] = 'q=1';
         $_SERVER['HTTP_CONTENT_TYPE'] = 'application/json';
 
         $msg = 'hello world';
@@ -98,6 +102,7 @@ class HttpRequestTest extends TestCase {
     public function testPutRequest() {
         $_SERVER['REQUEST_METHOD'] = 'put';
         $_SERVER['REQUEST_URI'] = '/';
+        $_SERVER['QUERY_STRING'] = '';
         $_SERVER['CONTENT_TYPE'] = 'application/json';
 
         $msg = 'hello world';
@@ -123,7 +128,8 @@ class HttpRequestTest extends TestCase {
 
     public function testGetRequestToken() {
         $_SERVER['REQUEST_METHOD'] = 'put';
-        $_SERVER['REQUEST_URI'] = '/';
+        $_SERVER['REQUEST_URI'] = '/?';
+        $_SERVER['QUERY_STRING'] = '';
         $_SERVER['CONTENT_TYPE'] = 'application/json';
         $_SERVER['HTTP_AUTHORIZATION'] = 'bearer xxx';
 
@@ -135,6 +141,7 @@ class HttpRequestTest extends TestCase {
     public function testGetRequestInvalidToken() {
         $_SERVER['REQUEST_METHOD'] = 'put';
         $_SERVER['REQUEST_URI'] = '/';
+        unset($_SERVER['QUERY_STRING']);
         $_SERVER['CONTENT_TYPE'] = 'application/json';
         $_SERVER['HTTP_AUTHORIZATION'] = 'berer xxx';
 
